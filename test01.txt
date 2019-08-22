@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.audreysperry</groupId>
+    <artifactId>currencyConverter</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
+
+</project>
+
+
+https://github.com/omcnicoll/CurrencyConverter
+https://github.com/figield/currencyConverter
+https://github.com/psylvain324/CurrencyConverter_Java/tree/master/currency_converter_java
+https://github.com/clintona/fxcalc
+
+
+package com.example.myapp;
+
+import java.text.DecimalFormat;
+import java.util.*;
+
+public class mainApp {
+	
+	static Double baseSGD = 1.00;
+	static Scanner in;
+	
+	private static Double changeRate(Map<String, Double> mapCurr,String baseCurr, String convCurr) {
+		Double baseValue = mapCurr.get(baseCurr);
+		Double convValue = mapCurr.get(convCurr);
+		
+		Double returnRate = 0.0;
+		
+		if(baseCurr == "SGD") {
+			returnRate = convValue;
+		}else {
+			returnRate = convValue / baseValue;
+		}
+		
+		return returnRate;
+	}
+	
+	private static void changeMoney(Scanner in) {
+		
+		String baseCurr="";
+		String convCurr="";
+		Double baseAmt=0.0;
+		Double convAmt=0.0;
+		
+		//init currency value
+		//java.util.HashMap<K, V>
+		
+		Map<String, Double> currencyRate = new HashMap<String, Double>(){{
+			put("SGD",1.00);
+			put("HKD",5.66);
+			put("MYR", 3.02);
+			put("RMB",5.10);
+			put("USD", 0.72);
+			put("EUR", 0.65);
+		}};
+		
+		
+		
+		//Scanner scanner;
+		//Scanner in = new Scanner(System.in);
+		
+		System.out.println("Input base currency or (q) to quit: ");
+		baseCurr = in.next();
+		
+		if(baseCurr.equals("q")) {
+			System.out.println("bye..");
+			in.close();
+			System.exit(0);
+		}
+		
+		System.out.println("Input converted currency ");
+		convCurr = in.next();
+		
+		System.out.println("Input base amount: ");
+		baseAmt = in.nextDouble();
+		
+		//in.close();
+		
+		System.out.println("baseCurr:" + baseCurr);
+		System.out.println("convCurr:" + convCurr);
+		System.out.println("baseAmt: " + baseAmt);
+		
+		Double chgRate = changeRate(currencyRate, baseCurr,convCurr);
+		convAmt = baseAmt * chgRate;
+		
+		DecimalFormat fmt = new DecimalFormat("##.######");
+		DecimalFormat fmt2 = new DecimalFormat("##.##");
+		
+		System.out.println("Rate: " + fmt.format(chgRate));
+		System.out.println("convAmt: " + fmt2.format(convAmt));
+
+		//in.close();
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		in = new Scanner(System.in);
+		
+		//init currency value
+		//java.util.HashMap<K, V>
+		/*
+		Map<String, Double> currencyRate = new HashMap<String, Double>(){{
+			put("SGD",1.00);
+			put("HKD",5.66);
+			put("MYR", 3.02);
+			put("RMB",5.10);
+			put("USD", 0.72);
+			put("EUR", 0.65);
+		}};
+		*/
+		
+		//System.out.println("hkd:" + currencyRate.get("HKD"));
+		//System.out.println("myr:" + currencyRate.get("MYR"));
+		
+		//Scanner scanner;
+		
+		System.out.println("start...\n");
+		
+		
+		boolean b = true;
+		String chk = "test";
+		boolean runOnce = true;
+		
+		while(b) {
+			if(runOnce) {
+				changeMoney(in);
+				runOnce=false;
+			}
+			
+			
+			System.out.println("Press 1 to continue..");
+			 
+			//Scanner sc =new Scanner(System.in);
+		    chk = in.next();
+		    
+		    /*
+			if(chk.equals("")) {
+				//System.out.println("empty");
+				changeMoney(in);
+			}else {
+				System.out.println("has value");
+			}
+			*/
+		    
+		    if(chk.equals("1")) {
+		    	changeMoney(in);
+		    } else {
+		    	b=false;
+				in.close();
+				System.out.println("bye..");
+		    }
+/*
+			if(chk.equals("q")) {
+				b=false;
+				in.close();
+				System.out.println("bye..");
+				//System.exit(0);
+			}else {
+				//in = new Scanner(System.in);
+				changeMoney(in);
+			}
+			*/
+		}
+		
+		/*
+		Scanner scanner;
+		Scanner in = new Scanner(System.in);
+		
+		System.out.println("Input base currency or (q) to quit: ");
+		baseCurr = in.next();
+		
+		System.out.println("Input converted currency ");
+		convCurr = in.next();
+		
+		System.out.println("Input base amount: ");
+		baseAmt = in.nextDouble();
+		
+		in.close();
+		
+		System.out.println("baseCurr:" + baseCurr);
+		System.out.println("convCurr:" + convCurr);
+		System.out.println("baseAmt: " + baseAmt);
+		
+		Double chgRate = changeRate(currencyRate, baseCurr,convCurr);
+		
+		
+		DecimalFormat fmt = new DecimalFormat("##.######");
+		DecimalFormat fmt2 = new DecimalFormat("##.##");
+		
+		System.out.println("Rate: " + fmt.format(chgRate));
+		System.out.println("convAmt: " + fmt2.format(baseAmt * chgRate));
+		*/
+		 
+	
+		
+		System.out.println("hello world");
+
+	}
+
+}
+
+
+
